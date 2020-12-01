@@ -7,7 +7,8 @@ public class Hacker : MonoBehaviour
     // Game State
     int level;
     enum Screen { MainMenu, Password, Win }
-    Screen currentScreen = Screen.MainMenu;
+    Screen currentScreen;
+    string password;
     
     
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class Hacker : MonoBehaviour
 
     void ShowMainMenu(string greeting)
         {
+            currentScreen = Screen.MainMenu;
             Terminal.ClearScreen();
             Terminal.WriteLine(greeting);
             Terminal.WriteLine("What would you like to hack into?");
@@ -35,20 +37,35 @@ public class Hacker : MonoBehaviour
         {
             ShowMainMenu("Resetting options...");
         }
-        else if(input == "1")
+        else if(currentScreen == Screen.MainMenu)
+        {
+            RunMainMenu(input);
+        }
+        else if(currentScreen == Screen.Password)
+        {
+            CheckPassword(input);
+        }
+	}
+
+    void RunMainMenu(string input)
+    {
+        if(input == "1")
         {
             level = 1;
             StartGame();
+            password = "insurance";
         }
         else if(input == "2")
         {
             level = 2;
             StartGame();
+            password = "brutality";
         }
         else if(input == "3")
         {
             level = 3;
             StartGame();
+            password = "policy";
         }
         else if(input == "Hack the planet!")
         {
@@ -58,16 +75,28 @@ public class Hacker : MonoBehaviour
         {
             Terminal.WriteLine("Please select a valid level.");
         }
-	}
+    }
 
     void StartGame()
     {
         currentScreen = Screen.Password;
+
         Terminal.WriteLine("You chose Level " + level);
         Terminal.WriteLine("Please enter the password: ");
         
     }
 
+    void CheckPassword(string input) 
+    {
+        if(input == password)
+        {
+            Terminal.WriteLine("Good job!");
+        }
+        else
+        {
+            Terminal.WriteLine("Bad smarts. Try again.");
+        }
+    }
 
     void Update()
     {
