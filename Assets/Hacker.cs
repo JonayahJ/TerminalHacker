@@ -9,10 +9,14 @@ public class Hacker : MonoBehaviour
     {
         ShowMainMenu();
     }
-    
+
     void ShowMainMenu()
         {
             Terminal.ClearScreen();
+
+            string greeting = "Hello, Jo.";
+            Terminal.WriteLine(greeting);
+            
             Terminal.WriteLine("What would you like to hack into?");
             Terminal.WriteLine("Press 1 for City Hall.");
             Terminal.WriteLine("Press 2 for the Police Precint.");
