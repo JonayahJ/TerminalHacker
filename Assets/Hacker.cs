@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    // Game configuration data
+    string[] level1Passwords = { "needle", "blood", "bandage", "doctor", "nurse" };
+    string[] level2Passwords = { "cuffs", "kill", "arrest", "gun", "cop" };
+    string[] level3Passwords = { "mayor", "politician", "law", "budget", "protest" };
+    
     // Game State
     int level;
     enum Screen { MainMenu, Password, Win }
@@ -49,41 +54,43 @@ public class Hacker : MonoBehaviour
 
     void RunMainMenu(string input)
     {
-        if(input == "1")
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        if(isValidLevelNumber)
         {
-            level = 1;
+            level = int.Parse(input);
             StartGame();
-            password = "insurance";
         }
-        else if(input == "2")
-        {
-            level = 2;
-            StartGame();
-            password = "brutality";
-        }
-        else if(input == "3")
-        {
-            level = 3;
-            StartGame();
-            password = "policy";
-        }
-        else if(input == "Hack the planet!")
+        else if(input == "Hack the planet!") // Easter egg
         {
             Terminal.WriteLine("Nice to see you, ZeroCool!  Please make your selection.");
         }
         else
         {
             Terminal.WriteLine("Please select a valid level.");
+            Debug.LogError("Invalid level number.");
         }
     }
 
     void StartGame()
     {
         currentScreen = Screen.Password;
-
-        Terminal.WriteLine("You chose Level " + level);
+        Terminal.ClearScreen();
         Terminal.WriteLine("Please enter the password: ");
-        
+        switch(level)
+        {
+            case 1:
+                password = level1Passwords[2];
+                break;
+            case 2:
+                password = level2Passwords[2];
+                break;
+            case 3:
+                password = level3Passwords[2];
+                break;
+            default:
+                Debug.LogError("Invalid level number");
+                break;
+        }
     }
 
     void CheckPassword(string input) 
