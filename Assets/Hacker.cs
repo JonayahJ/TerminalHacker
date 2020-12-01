@@ -6,6 +6,9 @@ public class Hacker : MonoBehaviour
 {
     // Game State
     int level;
+    enum Screen { MainMenu, Password, Win }
+    Screen currentScreen = Screen.MainMenu;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -59,8 +62,12 @@ public class Hacker : MonoBehaviour
 
     void StartGame()
     {
+        currentScreen = Screen.Password;
         Terminal.WriteLine("You chose Level " + level);
+        Terminal.WriteLine("Please enter the password: ");
+        
     }
+
 
     void Update()
     {
